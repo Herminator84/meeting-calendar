@@ -10,4 +10,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;  // Ensure this line is added
+export default Analytics;

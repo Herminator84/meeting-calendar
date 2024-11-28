@@ -1,40 +1,43 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-const Navbar = () => {
+const NavbarComponent = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">Meeting Calendar</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/schedule">Schedule Meeting</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/manage">Manage</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/notifications">Notifications</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/analytics">Analytics</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/settings">Settings</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar expand="lg" bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand href="/">My Website</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/" active>
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/about">
+              About
+            </Nav.Link>
+            <NavDropdown title="Services" id="services-dropdown">
+              <NavDropdown.Item as={Link} to="/services/service1">
+                Service 1
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/services/service2">
+                Service 2
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/services/service3">
+                Service 3
+              </NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link as={Link} to="/contact">
+              Contact
+            </Nav.Link>
+            <Nav.Link as={Link} to="/login">
+              <Button variant="outline-light">Login</Button>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavbarComponent;

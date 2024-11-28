@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const ScheduleMeeting = () => {
+const ScheduleMeeting = ({ addMeeting, editMeeting, handleEdit }) => {
   const [meetingData, setMeetingData] = useState({
-    title: '',
-    date: '',
-    time: '',
+    id: null,
+    title: "",
+    date: "",
+    time: "",
   });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [error, setError] = useState(''); 
+  // Populate form if editing
+  useEffect(() => {
+    if (editMeeting) {
+      setMeetingData(editMeeting);
+    }
+  }, [editMeeting]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,36 +25,41 @@ const ScheduleMeeting = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    
+    // Basic validation
     if (!meetingData.title || !meetingData.date || !meetingData.time) {
       setError("All fields are required.");
+      setLoading(false);
       return;
     }
 
-    
-    setError('');
-    setMeetingData({
-      title: '',
-      date: '',
-      time: '',
-    });
+    try {
+      if (editMeeting) {
+        handleEdit(meetingData); // Update existing meeting
+      } else {
+        addMeeting({ ...meetingData, id: Date.now() }); // Add new meeting
+      }
 
-    // Here you would typically send the data to an API, e.g. using fetch()
+      // Reset form after successful submission
+      setMeetingData({ id: null, title: "", date: "", time: "" });
+    } catch (error) {
+      setError("An error occurred while submitting the form.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="container">
-      <h1 className="my-4">Schedule a New Meeting</h1>
-      <form onSubmit={handleSubmit}> {/* Fixed onSubmit typo */}
-        {error && <div className="alert alert-danger">{error}</div>} {/* Fixed closing div tag */}
-
+    <div className="card">
+      <h2>{editMeeting ? "Edit Meeting" : "Schedule a New Meeting"}</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Meeting Title
-          </label>
+          <label htmlFor="title">Meeting Title</label>
           <input
             type="text"
             id="title"
@@ -55,13 +68,14 @@ const ScheduleMeeting = () => {
             value={meetingData.title}
             onChange={handleChange}
             required
+            aria-describedby="title-help"
           />
+          <small id="title-help" className="form-text text-muted">
+            Enter the title of the meeting.
+          </small>
         </div>
-
         <div className="mb-3">
-          <label htmlFor="date" className="form-label">
-            Date
-          </label>
+          <label htmlFor="date">Meeting Date</label>
           <input
             type="date"
             id="date"
@@ -70,13 +84,14 @@ const ScheduleMeeting = () => {
             value={meetingData.date}
             onChange={handleChange}
             required
+            aria-describedby="date-help"
           />
+          <small id="date-help" className="form-text text-muted">
+            Choose a date for the meeting.
+          </small>
         </div>
-
         <div className="mb-3">
-          <label htmlFor="time" className="form-label">
-            Time
-          </label>
+          <label htmlFor="time">Meeting Time</label>
           <input
             type="time"
             id="time"
@@ -85,11 +100,14 @@ const ScheduleMeeting = () => {
             value={meetingData.time}
             onChange={handleChange}
             required
+            aria-describedby="time-help"
           />
+          <small id="time-help" className="form-text text-muted">
+            Set the meeting time.
+          </small>
         </div>
-
-        <button type="submit" className="btn btn-primary">
-          Schedule Meeting
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "Submitting..." : editMeeting ? "Update Meeting" : "Add Meeting"}
         </button>
       </form>
     </div>
