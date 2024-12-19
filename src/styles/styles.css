@@ -1,36 +1,156 @@
-/* Base styles for the layout */
+/* App.css */
+
+/* General Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+/* App Container */
 .app-container {
-  background-color: #f8f9fa;
-  min-height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
-.dark-mode {
-  background-color: #343a40;
+/* Sidebar Styling */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
   color: white;
-}
-
-.main-content {
   padding: 20px;
 }
 
-.sidebar {
-  height: 100vh;
-  background-color: #212529;
-}
-
-.sidebar-header {
-  border-bottom: 1px solid #495057;
-}
-
-.navbar {
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #212529;
+.sidebar a {
+  text-decoration: none;
   color: white;
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #34495e;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: #34495e;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* Meeting Form */
+.meeting-form {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.meeting-form h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.meeting-form .form-group {
+  margin-bottom: 15px;
+}
+
+.meeting-form .form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.meeting-form .form-group input,
+.meeting-form .form-group textarea,
+.meeting-form .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.meeting-form .form-group input:focus,
+.meeting-form .form-group textarea:focus,
+.meeting-form .form-group select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.meeting-form .form-group input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.meeting-form button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.meeting-form button:hover {
+  background-color: #2980b9;
+}
+
+/* Meeting List */
+.meeting-list {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.meeting-list h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.meeting-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.meeting-list table th,
+.meeting-list table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.meeting-list table th {
+  background-color: #f4f4f9;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #2c3e50;
+  color: white;
+  border-top: 1px solid #34495e;
 }

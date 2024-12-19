@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Sidebar from "./components/Sidebar"; 
-import Navbar from "./components/Navbar"; 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
+
 import "./styles/App.css";
 
 function App() {
@@ -11,17 +12,16 @@ function App() {
   const [meetingTime, setMeetingTime] = useState("");
   const [participants, setParticipants] = useState("");
   const [description, setDescription] = useState("");
-  const [meetingLevel, setMeetingLevel] = useState(""); // New state for meeting level
+  const [isFullDay, setIsFullDay] = useState(false); // New state for Full Day
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newMeeting = {
       title: meetingTitle,
       date: meetingDate,
-      time: meetingTime,
+      time: isFullDay ? "Full Day" : meetingTime, // Adjust time if full-day
       participants,
       description,
-      level: meetingLevel, // Include the selected meeting level
     };
     setMeetings([...meetings, newMeeting]);
     setMeetingTitle("");
@@ -29,7 +29,7 @@ function App() {
     setMeetingTime("");
     setParticipants("");
     setDescription("");
-    setMeetingLevel(""); // Reset meeting level after submission
+    setIsFullDay(false); // Reset Full Day checkbox
   };
 
   return (
@@ -61,12 +61,23 @@ function App() {
                 />
               </div>
               <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isFullDay}
+                    onChange={(e) => setIsFullDay(e.target.checked)}
+                  />
+                  Full Day Meeting
+                </label>
+              </div>
+              <div className="form-group">
                 <label>Meeting Time</label>
                 <input
                   type="time"
                   value={meetingTime}
                   onChange={(e) => setMeetingTime(e.target.value)}
-                  required
+                  disabled={isFullDay} // Disable when "Full Day" is selected
+                  required={!isFullDay} // Required only if not "Full Day"
                 />
               </div>
               <div className="form-group">
@@ -86,19 +97,6 @@ function App() {
                   placeholder="Enter meeting description"
                 ></textarea>
               </div>
-              <div className="form-group">
-                <label>Meeting Level</label>
-                <select
-                  value={meetingLevel}
-                  onChange={(e) => setMeetingLevel(e.target.value)}
-                  required
-                >
-                  <option value="">Select meeting level</option>
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-              </div>
               <button type="submit">Create Meeting</button>
             </form>
           </div>
@@ -113,7 +111,6 @@ function App() {
                   <th>Date</th>
                   <th>Time</th>
                   <th>Participants</th>
-                  <th>Level</th> {/* Added Level column */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -125,7 +122,6 @@ function App() {
                     <td>{meeting.date}</td>
                     <td>{meeting.time}</td>
                     <td>{meeting.participants}</td>
-                    <td>{meeting.level}</td> {/* Display level */}
                     <td>
                       <button>Edit</button>
                       <button>Delete</button>
