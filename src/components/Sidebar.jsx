@@ -12,6 +12,7 @@ const Sidebar = () => {
         <Link to="/manage">Manage Meetings</Link>
         <Link to="/notifications">Notifications</Link>
         <Link to="/settings">Settings</Link>
+        <Link to="/invitations">Invitations</Link> {/* New link for Invitations */}
       </nav>
     </div>
   );
